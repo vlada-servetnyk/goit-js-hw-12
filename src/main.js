@@ -50,6 +50,7 @@ async function handleSearch(event) {
 
     try {
         const data = await fetchImages(inputSearch, page);
+        console.log(data);
         
         if (data.hits.length === 0) {
             btnLoadMore.classList.replace("btn-load-more", "btn-none");
@@ -63,18 +64,23 @@ async function handleSearch(event) {
                 position: 'topRight',
             });
             return
-        } else if (data.totalHits < 15) {
-            gallery.insertAdjacentHTML("beforeend", renderImages(data.hits));
+        };
+
+        gallery.insertAdjacentHTML("beforeend", renderImages(data.hits));
+
+        if (data.hits.length < 15 || data.total === 15) {
             btnLoadMore.classList.replace("btn-load-more", "btn-none");
+            loader.style.display = "none";
             iziToast.show({
                     title: '',
                     backgroundColor: 'blue',
                     messageColor: 'white',
                     message: `We're sorry, but you've reached the end of search results.`,
                     position: 'topRight',
-                })
+            })
+            return
         }
-        gallery.insertAdjacentHTML("beforeend", renderImages(data.hits));
+        
         btnLoadMore.classList.replace("btn-none", "btn-load-more");
         lightbox.refresh();
         inputElement.value = "";
