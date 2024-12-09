@@ -78,6 +78,8 @@ async function handleSearch(event) {
                     message: `We're sorry, but you've reached the end of search results.`,
                     position: 'topRight',
             })
+            lightbox.refresh();
+            inputElement.value = "";
             return
         }
         
