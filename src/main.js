@@ -110,7 +110,7 @@ async function clickLoadMore() {
         const response = await fetchImages(inputSearch, page);
         
         gallery.insertAdjacentHTML("beforeend", renderImages(response.hits));
-
+        lightbox.refresh();
         btnLoadMore.classList.replace("btn-none", "btn-load-more");
         loader.style.display = "none";
 
